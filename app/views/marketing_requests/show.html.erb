@@ -7,27 +7,24 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h1><%= @marketing_request.title %></h1>
+  <h3><%= @marketing_request.title %></h3>
 </div>
 
 <dl class="dl-horizontal">
   <dt></dt>
   <dd>
-    <h4><span class="label pull-right label-default label-<%=@marketing_request.workflow_state %>"><%= @marketing_request.workflow_state.humanize.upcase %></span></h4>
-    </dd>
+    <% if @marketing_request.complete? %>
+      <%= link_to 'Reopen', reopen_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' %>
+    <% else %>
+      <%= link_to 'Mark as Complete', complete_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' %>
+    <% end %>
+
+    <span class="label pull-right label-<%=@marketing_request.workflow_state %>"><%= @marketing_request.workflow_state.humanize.upcase %></span>
+  </dd>
   <br>
 
   <dt>Description:</dt>
-  <dd><%= @marketing_request.description %></dd>
-  <br>
-
-
-  <dt></dt>
-  <% if @marketing_request.complete? %>
-    <dd><%= link_to 'Reopen', reopen_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' %></dd>
-  <% else %>
-    <dd><%= link_to 'Mark as Complete', complete_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' %></dd>
-  <% end %>
+  <dd><%= @marketing_request.description.html_safe %></dd>
   <br>
 
   <dt>Owner:</dt>

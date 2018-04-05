@@ -7,12 +7,12 @@
 </div>
 
 <div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
+  <table class="table table-striped table-bordered table-hover datatable">
     <thead>
       <tr>
             <th>Title</th>
             <th>Description</th>
-            <th>Submitted By</th>
+            <th>Submitted</th>
             <th></th>
             <th></th>
         <th></th>
@@ -24,7 +24,7 @@
       <%= content_tag_for(:tr, @marketing_requests) do |marketing_request| %>
             <td><%= marketing_request.title %></td>
             <td><%= marketing_request.description %></td>
-            <td><%= marketing_request.submitted_by %><br>on <%= local_time marketing_request.created_at %></td>
+            <td><span style="display:none;"><%= marketing_request.created_at.to_i %></span><%= marketing_request.submitted_by %><br>on <%= local_time marketing_request.created_at %></td>
             <td>
               <h5><span class="label pull-right label-default label-<%=marketing_request.workflow_state %>">
               <%= marketing_request.workflow_state.humanize.upcase %></span></h5>
