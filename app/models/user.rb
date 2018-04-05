@@ -10,4 +10,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  has_many :marketing_requests, foreign_key: :submitted_by_id
+
+  def to_s
+    name
+  end
 end

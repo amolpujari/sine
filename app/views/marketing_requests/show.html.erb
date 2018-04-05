@@ -1,0 +1,42 @@
+<div class="page-header">
+  <%= link_to marketing_requests_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_marketing_request_path(@marketing_request), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1><%= @marketing_request.title %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt></dt>
+  <dd>
+    <h4><span class="label pull-right label-default label-<%=@marketing_request.workflow_state %>"><%= @marketing_request.workflow_state.humanize.upcase %></span></h4>
+    </dd>
+  <br>
+
+  <dt>Description:</dt>
+  <dd><%= @marketing_request.description %></dd>
+  <br>
+
+
+  <dt></dt>
+  <% if @marketing_request.complete? %>
+    <dd><%= link_to 'Reopen', reopen_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' %></dd>
+  <% else %>
+    <dd><%= link_to 'Mark as Complete', complete_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' %></dd>
+  <% end %>
+  <br>
+
+  <dt>Owner:</dt>
+  <dd><%= @marketing_request.submitted_by %></dd>
+
+  <dt>Created at:</dt>
+  <dd><%= local_time @marketing_request.created_at %></dd>
+
+  <dt>Last updated at:</dt>
+  <dd><%= local_time @marketing_request.updated_at %></dd>
+
+</dl>
