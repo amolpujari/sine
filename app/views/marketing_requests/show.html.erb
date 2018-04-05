@@ -3,11 +3,11 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
-  <%= link_to edit_marketing_request_path(@marketing_request), class: 'btn btn-primary' do %>
+  <%= link_to edit_marketing_request_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h3><%= @marketing_request.title %></h3>
+  <h4><%= @marketing_request.title %></h4>
 </div>
 
 <dl class="dl-horizontal">
@@ -37,3 +37,12 @@
   <dd><%= local_time @marketing_request.updated_at %></dd>
 
 </dl>
+
+<br><br><br><br><br><br><br>
+<div class="page-header">
+  <%= link_to @marketing_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  do %>
+    <span class="glyphicon glyphicon-trash"></span>
+    Delete
+  <% end %>
+  <h4>&nbsp;</h4>
+</div>

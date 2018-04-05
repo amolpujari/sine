@@ -21,8 +21,9 @@
 
 $(document).on('turbolinks:load', function () {
   $('.datatable').DataTable({
+    "order": [[ 2, "desc" ]],
     columnDefs: [
-      { orderable: false, targets: [-1,-2,-3, -6] }
+      { orderable: false, targets: [-1,-2, -5] }
     ]
   });
 });

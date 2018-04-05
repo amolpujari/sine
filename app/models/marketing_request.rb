@@ -1,8 +1,10 @@
 class MarketingRequest < ApplicationRecord
+  default_scope { order('created_at DESC') }
+
   include Workflow
   workflow do
     state :open
-    state :in_progress
+    state :in_review
     state :stale
     state :complete
 
