@@ -1,6 +1,8 @@
 class MarketingRequest < ApplicationRecord
   default_scope { order('created_at DESC') }
 
+  acts_as_commontable dependent: :destroy
+
   include Workflow
   workflow do
     state :open

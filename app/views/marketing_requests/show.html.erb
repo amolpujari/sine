@@ -38,11 +38,16 @@
 
 </dl>
 
+<div class="page-header">
+  <h4>Discussion</h4>
+</div>
+<%= commontator_thread(@marketing_request) %>
+
 <br><br><br><br><br><br><br>
 <div class="page-header">
   <%= link_to @marketing_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  do %>
     <span class="glyphicon glyphicon-trash"></span>
-    Delete
+    Delete Request
   <% end %>
   <h4>&nbsp;</h4>
 </div>

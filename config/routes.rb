@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Commontator::Engine => '/commontator'
+  
   resources :marketing_requests do
     member do
       put :complete

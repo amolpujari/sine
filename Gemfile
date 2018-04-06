@@ -34,6 +34,7 @@ gem 'local_time'
 gem 'bootstrap-generators', '~> 3.3.4'
 gem 'record_tag_helper', '~> 1.0'
 gem 'jquery-datatables-rails', '~> 3.4.0'
+gem 'commontator', '~> 5.1.0'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
