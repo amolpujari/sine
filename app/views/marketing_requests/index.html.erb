@@ -3,7 +3,7 @@
     <span class="glyphicon glyphicon-plus"></span>
     New Marketing request
   <% end %>
-  <h4>Latest Requests</h4>
+  <h4>Requests</h4>
 </div>
 
 <div class="table-responsive">
@@ -23,7 +23,7 @@
       <%= content_tag_for(:tr, @marketing_requests) do |marketing_request| %>
             <td><%= marketing_request.title %></td>
             <td><%= marketing_request.description %></td>
-            <td><span style="display:none;"><%= marketing_request.created_at.to_i %></span><%= marketing_request.submitted_by %><br><%= local_time marketing_request.created_at %></td>
+            <td><span style="display:none;"><%= marketing_request.created_at.to_i %></span><%= marketing_request.submitted_by %><br><%= local_time_ago marketing_request.created_at %></td>
             <td>
               <h5><span class="label pull-right label-default label-<%=marketing_request.workflow_state %>">
               <%= marketing_request.workflow_state.humanize.upcase %></span></h5>
