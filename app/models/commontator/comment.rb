@@ -8,8 +8,11 @@ module Commontator
 
     def mark_request_in_review
       o = self.thread.commontable
-      o.workflow_state = :in_review
-      o.save
+
+      if o.workflow_state=='open'
+        o.workflow_state = :in_review
+        o.save
+      end
     end
 
     belongs_to :creator, polymorphic: true
