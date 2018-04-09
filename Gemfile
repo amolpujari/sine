@@ -15,32 +15,31 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem "font-awesome-rails"
+gem "jquery-fileupload-rails"
 gem 'administrate'
+gem 'best_in_place', git: 'git@github.com:rogsmith/best_in_place.git'
+gem 'bootstrap-generators', '~> 3.3.4'
 gem 'bootstrap-sass'
 gem 'bourbon'
+gem 'commontator', '~> 5.1.0'
 gem 'devise'
 gem 'high_voltage'
+gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'jquery-rails'
+gem 'local_time'
 gem 'mysql2', '~> 0.3.18'
+gem 'paperclip'
+gem 'rails_autolink'
+gem 'ransack'
+gem 'record_tag_helper', '~> 1.0'
 gem 'simple_form'
 gem 'therubyracer', :platform=>:ruby
-gem 'paperclip'
-gem "font-awesome-rails"
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'workflow'
-gem 'ransack'
-gem 'rails_autolink'
-gem 'local_time'
-gem 'bootstrap-generators', '~> 3.3.4'
-gem 'record_tag_helper', '~> 1.0'
-gem 'jquery-datatables-rails', '~> 3.4.0'
-gem 'commontator', '~> 5.1.0'
+
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
   gem 'capistrano', '~> 3.0.1'
   gem 'capistrano-bundler'
@@ -50,11 +49,15 @@ group :development do
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-rspec'
+  gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rails_layout'
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
+  gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console', '>= 3.3.0'
 end
 
 group :development, :test do

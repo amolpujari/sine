@@ -17,7 +17,10 @@
 //= require bootstrap
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//= require jquery-fileupload/basic
 //= require local-time
+//= require best_in_place
+//= require best_in_place.jquery-ui
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
@@ -27,4 +30,6 @@ $(document).on('turbolinks:load', function () {
       { orderable: false, targets: [-1,-2, -5] }
     ]
   });
+
+  $(".best_in_place").best_in_place();
 });

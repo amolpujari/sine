@@ -3,6 +3,9 @@ class MarketingRequest < ApplicationRecord
 
   acts_as_commontable dependent: :destroy
 
+  has_many :documents, :as => :assetable, :class_name => "Asset::Document", :dependent => :destroy
+  accepts_nested_attributes_for :documents, :allow_destroy => true
+
   include Workflow
   workflow do
     state :open
