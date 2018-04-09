@@ -18,6 +18,7 @@ gem 'jbuilder', '~> 2.5'
 gem "font-awesome-rails"
 gem "jquery-fileupload-rails"
 gem 'administrate'
+gem 'awesome_print'
 gem 'best_in_place', git: 'git@github.com:rogsmith/best_in_place.git'
 gem 'bootstrap-generators', '~> 3.3.4'
 gem 'bootstrap-sass'
@@ -67,6 +68,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'pry-rails'
 end
 
 group :test do
