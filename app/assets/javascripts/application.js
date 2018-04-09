@@ -32,4 +32,16 @@ $(document).on('turbolinks:load', function () {
   });
 
   $(".best_in_place").best_in_place();
+
+  $(".nav-tabs a[data-nav]").on('click', function(e){
+    var target = $(e.target);
+    if (target.closest('li').hasClass('active')) {
+      return false;
+    }
+    $(".nav-tabs li").removeClass('active');
+    target.closest('li').addClass('active');
+    $('.nav-content').hide();
+    $(target.data('nav')).show();
+    return false;
+  });
 });

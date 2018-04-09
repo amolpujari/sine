@@ -23,7 +23,7 @@
 
     <% if @new_comment.nil? %>
       <div id="thread_<%= thread.id %>_new_comment_link_div" class="thread_new_comment_link">
-        <%= link_to 'Respond',
+        <%= link_to '<i class="fa fa-mail-reply"></i> Respond'.html_safe,
             commontator.new_thread_comment_path(thread, per_page: per_page),
             remote: true, class: 'btn btn-primary' %>
       </div>

@@ -1,0 +1,25 @@
+<div class="list-group list-group--block">
+  <% @marketing_request.documents.each do |document| %>
+    <div class="list-group__wrap">
+      <div class="list-group-item media">
+        <div class="media-body list-group__text">
+            <strong><a href="<%= document.attachment.url %>" download><%= document.public_name %></a></strong>
+            <div class="list-group__attrs">
+                <div><%= local_time document.created_at %></div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+  <% end %>
+</div>
+<div class="detail-info__header clearfix">
+  <div class='actions'>
+    <a class="fileinput-button" type="button">
+      <span class="btn btn-primary"><i class='fa fa-upload'></i> Upload</span>
+      <%= form_for @marketing_request, :html => {:multipart => true}, class: 'form-control' do |f| %>
+        <%= file_field_tag "marketing_request[documents_attributes][][attachment]", multiple: true, onchange:"javascript:this.form.submit();" %>
+      <% end %>
+    </a>
+  </div>
+</div>
