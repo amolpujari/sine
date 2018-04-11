@@ -9,7 +9,7 @@ module Commontator
     def mark_request_in_review
       o = self.thread.commontable
 
-      if o.workflow_state=='open'
+      unless o.complete?
         o.workflow_state = :in_review
         o.save
       end

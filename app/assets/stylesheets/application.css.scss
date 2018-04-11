@@ -22,13 +22,19 @@
     background-color: #f0ad4e;
 }
 .label-in_review {
+    background-color: #337ab7;
+}
+.label-new {
+    background-color: #337ab7;
+}
+.label-reopened {
+    background-color: #337ab7;
+}
+.label-accepted {
     background-color: #5cb85c;
 }
-.label-open {
-    background-color: #777777;
-}
-.label-complete {
-    background-color: black;
+.label-rejected {
+    background-color: #d9534f;
 }
 .label {
   font-size: 14px;

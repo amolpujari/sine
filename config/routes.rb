@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   resources :marketing_requests do
     member do
-      put :complete
+      put :accept
+      put :reject
       put :reopen
     end
   end

@@ -16,6 +16,6 @@ class User < ApplicationRecord
   has_many :marketing_requests, foreign_key: :submitted_by_id
 
   def to_s
-    name
+    name || email
   end
 end

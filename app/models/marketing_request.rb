@@ -8,14 +8,28 @@ class MarketingRequest < ApplicationRecord
 
   include Workflow
   workflow do
-    state :open
+    state :new
     state :in_review
     state :stale
-    state :complete
+    state :accepted
+    state :rejected
+    state :reopened
 
     on_error do |error, from, to, event, *args|
       logger.fatal "#{error.inspect} on #{from} -> #{to}"
     end
+  end
+
+  def self.completed_states
+    @completed_states ||= ['accepted', 'rejected']
+  end
+
+  def self.mark_stale
+    self.where('workflow_state != "stale" ').where('updated_at < ?', Date.today-5).update_all(workflow_state: 'stale')
+  end
+
+  def complete?
+    self.class.completed_states.include? self.workflow_state
   end
 
   belongs_to :submitted_by, class_name: 'User'

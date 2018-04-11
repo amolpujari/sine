@@ -3,43 +3,43 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
+  <% if @marketing_request.complete? %>
+    <%= link_to reopen_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' do %>
+      <span class="glyphicon glyphicon-eject"></span>
+      Reopen
+    <% end %>
+  <% else %>
   <%= link_to edit_marketing_request_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
+    <%= link_to accept_marketing_request_path, 'data-method' => :put, class: 'btn btn-success' do %>
+      <span class="glyphicon glyphicon-ok"></span>
+      Accept
+    <% end %>
+    <%= link_to reject_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' do %>
+      <span class="glyphicon glyphicon-remove"></span>
+      Reject
+    <% end %>
+  <% end %>
+
   <h4><%= @marketing_request.title %></h4>
 </div>
 
 <dl class="dl-horizontal">
-  <dt></dt>
-  <dd>
-    <% unless @marketing_request.complete? %>
-      <%= link_to 'Mark as Complete', complete_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' %>
-    <% end %>
-
-    <span class="label pull-right label-<%=@marketing_request.workflow_state %>"><%= @marketing_request.workflow_state.humanize.upcase %></span>
-  </dd>
-  <br>
-
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-9" style="border-right: 1px solid #eeeeee;">
-        <dl class="dl-horizontal">
-          <dt>Description:</dt>
-          <dd><%= @marketing_request.description.html_safe %></dd>
-          <br>
+        <p><span class="label label-<%=@marketing_request.workflow_state %>"><%= @marketing_request.workflow_state.humanize.upcase %></span>
+        </p>
 
-          <dt>Owner:</dt>
-          <dd><%= @marketing_request.submitted_by %></dd>
+        <p><%= @marketing_request.description.html_safe %></p>
+        
+        <p style="color:#777;">
+          By <%= @marketing_request.submitted_by %> on <%= local_time_ago @marketing_request.created_at %>
+          <br/>Last updated <%= local_time_ago @marketing_request.updated_at %>
+        </p>        
 
-          <dt>Created at:</dt>
-          <dd><%= local_time_ago @marketing_request.created_at %></dd>
-
-          <dt>Last updated at:</dt>
-          <dd><%= local_time_ago @marketing_request.updated_at %></dd>
-        </dl>
-
-        <br/><br/>
         <%= commontator_thread(@marketing_request) %>
 
       </div>

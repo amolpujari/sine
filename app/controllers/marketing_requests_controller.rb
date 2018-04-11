@@ -1,8 +1,9 @@
 class MarketingRequestsController < ApplicationController
   before_action :authenticate_user!, except: :index
-  before_action :set_marketing_request, only: [:show, :edit, :update, :destroy, :complete, :reopen]
+  before_action :set_marketing_request, only: [:show, :edit, :update, :destroy, :accept, :reject, :reopen]
 
   def index
+    MarketingRequest.mark_stale
     @marketing_requests = MarketingRequest.all
   end
 
@@ -16,14 +17,20 @@ class MarketingRequestsController < ApplicationController
   def edit
   end
 
-  def complete
-    @marketing_request.workflow_state = :complete
+  def accept
+    @marketing_request.workflow_state = :accepted
+    @marketing_request.save
+    render :show
+  end
+
+  def reject
+    @marketing_request.workflow_state = :rejected
     @marketing_request.save
     render :show
   end
 
   def reopen
-    @marketing_request.workflow_state = :open
+    @marketing_request.workflow_state = :reopened
     @marketing_request.save
     render :show
   end
