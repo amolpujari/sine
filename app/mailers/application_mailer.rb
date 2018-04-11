@@ -5,11 +5,20 @@ class ApplicationMailer < ActionMailer::Base
   default from: "Sine <info@sine>"
   layout 'mailer'
 
-  def notify_after_create record
+  def notify record, options={}
     @record = record
+    
+    @subject = if options[:subject]
+      "Sine: #{options[:subject]}"
+    else
+      "Sine: about #{record.class.name.demodulize.tableize.singularize.humanize}"
+    end
+
+    @body = options.delete(:body) || @record.to_email    
+    
     mail(to: [record.emails].flatten.compact.map(&:to_s).map(&:strip).uniq, 
       cc: [Rails.application.secrets.notify[:after_create].to_s.split(',')].flatten.compact.map(&:to_s).map(&:strip).uniq,
-      subject: "Sine: New #{record.class.name.demodulize.tableize.singularize.humanize}"
+      subject: @subject
     )
   end
 end

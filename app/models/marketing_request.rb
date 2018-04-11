@@ -1,7 +1,7 @@
 class MarketingRequest < ApplicationRecord
   default_scope { order('created_at DESC') }
 
-  include Concerns::NotifyAfterCreate
+  include Concerns::Notify
 
   def to_email
     %{
@@ -11,7 +11,7 @@ class MarketingRequest < ApplicationRecord
 
       <p>#{self.description}</p>
 
-      by: #{self.submitted_by.to_s}
+      Submitted by: #{self.submitted_by.to_s}
     }
   end
 
@@ -23,6 +23,13 @@ class MarketingRequest < ApplicationRecord
 
   def email_link
     %{<a href="http://#{Rails.application.secrets.domain_name}/marketing_requests/#{self.id}" target="_blank">#{self.title}</a>}
+  end
+
+  after_save :notify_if_completed
+
+  def notify_if_completed
+    notify({ subject: "Request #{self.workflow_state}"
+      }) if workflow_state_changed? && %w{reopened accepted rejected}.include?(workflow_state)
   end
 
   acts_as_commontable dependent: :destroy

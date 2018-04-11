@@ -2,10 +2,12 @@ module Commontator
   class Comment < ActiveRecord::Base
     after_create :mark_request_in_review
 
-    include Concerns::NotifyAfterCreate
+    include Concerns::Notify
 
     def to_email
       %{
+        #{self.creator} wrote:
+
         <p>#{self.body}</p>
 
         on #{email_link}

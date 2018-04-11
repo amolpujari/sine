@@ -14,11 +14,14 @@
     <br/>
   <% end %>
 </div>
-<div class='actions'>
-  <a class="fileinput-button pull-right" type="button">
-    <span class="btn btn-primary pull-right"><i class='fa fa-upload'></i> Upload</span>
-    <%= form_for @marketing_request, :html => {:multipart => true}, class: 'form-control' do |f| %>
-      <%= file_field_tag "marketing_request[documents_attributes][][attachment]", multiple: true, onchange:"javascript:this.form.submit();" %>
-    <% end %>
-  </a>
-</div>
+
+<% unless @marketing_request.complete? %>
+  <div class='actions'>
+    <a class="fileinput-button pull-right" type="button">
+      <span class="btn btn-primary pull-right"><i class='fa fa-upload'></i> Upload</span>
+      <%= form_for @marketing_request, :html => {:multipart => true}, class: 'form-control' do |f| %>
+        <%= file_field_tag "marketing_request[documents_attributes][][attachment]", multiple: true, onchange:"javascript:this.form.submit();" %>
+      <% end %>
+    </a>
+  </div>
+<% end %>

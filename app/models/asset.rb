@@ -3,7 +3,7 @@ class Asset < ApplicationRecord
   delegate :url, to: :attachment
   do_not_validate_attachment_file_type :attachment
 
-  include Concerns::NotifyAfterCreate
+  include Concerns::Notify
 
   def to_email
     %{
