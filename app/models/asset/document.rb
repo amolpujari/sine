@@ -1,3 +1,3 @@
 class Asset::Document < Asset
-	include Concerns::Renderable
+  include Concerns::Renderable
 end

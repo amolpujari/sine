@@ -10,12 +10,11 @@ module Concerns::Renderable
   end
 
   def data
-    if Rails.env.development?
-        data = open(attachment.path)
-      else
-        data = open(attachment.expiring_url(1800))
-      end
-      data
+    # if Rails.env.development?
+      open(attachment.path)
+    # else
+    #   open(attachment.expiring_url(1800))
+    # end
   end
 
   def render
