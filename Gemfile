@@ -34,6 +34,8 @@ gem 'paperclip'
 gem 'rails_autolink'
 gem 'ransack'
 gem 'record_tag_helper', '~> 1.0'
+gem 'sendgrid-ruby', '~> 1.1.6'
+gem 'sidekiq', '~> 3.5.0'
 gem 'simple_form'
 gem 'therubyracer', :platform=>:ruby
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

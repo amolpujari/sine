@@ -1,9 +1,23 @@
 module Commontator
   class Comment < ActiveRecord::Base
-    after_create :notify_legal, :mark_request_in_review
+    after_create :mark_request_in_review
 
-    def notify_legal
-      #ApplicationMailer.delay.new_comment(self)
+    include Concerns::NotifyAfterCreate
+
+    def to_email
+      %{
+        <p>#{self.body}</p>
+
+        on #{email_link}
+      }
+    end
+
+    def emails
+      self.thread.commontable.emails + [ self.creator.email ]
+    end
+
+    def email_link
+      self.thread.commontable.email_link
     end
 
     def mark_request_in_review
