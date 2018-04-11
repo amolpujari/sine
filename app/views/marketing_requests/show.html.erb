@@ -21,36 +21,35 @@
   </dd>
   <br>
 
-  <dt>Description:</dt>
-  <dd><%= @marketing_request.description.html_safe %></dd>
-  <br>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-9" style="border-right: 1px solid #eeeeee;">
+        <dl class="dl-horizontal">
+          <dt>Description:</dt>
+          <dd><%= @marketing_request.description.html_safe %></dd>
+          <br>
 
-  <dt>Owner:</dt>
-  <dd><%= @marketing_request.submitted_by %></dd>
+          <dt>Owner:</dt>
+          <dd><%= @marketing_request.submitted_by %></dd>
 
-  <dt>Created at:</dt>
-  <dd><%= local_time_ago @marketing_request.created_at %></dd>
+          <dt>Created at:</dt>
+          <dd><%= local_time_ago @marketing_request.created_at %></dd>
 
-  <dt>Last updated at:</dt>
-  <dd><%= local_time_ago @marketing_request.updated_at %></dd>
+          <dt>Last updated at:</dt>
+          <dd><%= local_time_ago @marketing_request.updated_at %></dd>
+        </dl>
 
+        <br/><br/>
+        <%= commontator_thread(@marketing_request) %>
+
+      </div>
+      <div class="col-md-3">
+        <%= render partial: 'files' %>
+      </div>
+    </div>    
+  </div>
 </dl>
 
-
-<br/><br/>
-<ul class="nav nav-tabs">
-  <li class="active"><a data-nav="#discussion" href="#">Discussion</a></li>
-  <li><a data-nav="#files" href="#">Files</a></li>
-</ul>
-
-<div id="files" style="display:none;" class="nav-content">
-  <br/>
-  <%= render partial: 'files' %>
-</div>
-
-<div id="discussion" class="nav-content">
-  <%= commontator_thread(@marketing_request) %>
-</div>
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <div class="page-header">
