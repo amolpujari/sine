@@ -29,7 +29,9 @@
               <%= marketing_request.workflow_state.humanize.upcase %></span></h5>
             </td>
             <td><%= link_to 'Show', marketing_request %></td>
-        <td><%= link_to 'Edit', edit_marketing_request_path(marketing_request) %></td>
+            <td>
+              <%= link_to 'Edit', edit_marketing_request_path(marketing_request) unless marketing_request.complete? %>
+            </td>
       <% end %>
     </tbody>
   </table>
