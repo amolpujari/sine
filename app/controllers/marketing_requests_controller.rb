@@ -1,10 +1,15 @@
 class MarketingRequestsController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!
   before_action :set_marketing_request, only: [:show, :edit, :update, :destroy, :accept, :reject, :reopen]
 
   def index
     MarketingRequest.mark_stale
-    @marketing_requests = MarketingRequest.all
+
+    @marketing_requests = if current_user.user?
+      MarketingRequest.where(submitted_by_id: current_user.id)
+    else
+      MarketingRequest.all      
+    end    
   end
 
   def show

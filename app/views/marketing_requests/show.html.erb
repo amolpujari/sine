@@ -3,24 +3,30 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
+  
   <% if @marketing_request.complete? %>
     <%= link_to reopen_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' do %>
       <span class="glyphicon glyphicon-eject"></span>
       Reopen
     <% end %>
+  
   <% else %>
-  <%= link_to edit_marketing_request_path, class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-pencil"></span>
-    Edit
-  <% end %>
-    <%= link_to accept_marketing_request_path, 'data-method' => :put, class: 'btn btn-success' do %>
-      <span class="glyphicon glyphicon-ok"></span>
-      Accept
+    <%= link_to edit_marketing_request_path, class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      Edit
     <% end %>
-    <%= link_to reject_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' do %>
-      <span class="glyphicon glyphicon-remove"></span>
-      Reject
+
+    <% unless current_user.user? %>
+      <%= link_to accept_marketing_request_path, 'data-method' => :put, class: 'btn btn-success' do %>
+        <span class="glyphicon glyphicon-ok"></span>
+        Accept
+      <% end %>
+      <%= link_to reject_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' do %>
+        <span class="glyphicon glyphicon-remove"></span>
+        Reject
+      <% end %>
     <% end %>
+
   <% end %>
 
   <h4><%= @marketing_request.title %></h4>
