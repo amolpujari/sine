@@ -34,7 +34,7 @@
           <li class="active"><a href="/">Requests</a></li>
           <% if current_user %>
             <% if current_user.role == 'admin' %>
-              <li><a href="/admin">Admin</a></li>
+              <li><a target="_blank" href="/admin">Admin</a></li>
             <% end %>
             <li class="pull-right"><a href="/users/sign_out" data-method='delete'>Logout</a></li>
           <% else %>
