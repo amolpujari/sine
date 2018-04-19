@@ -21,14 +21,14 @@
   </div>
 <% end %>
 
-<%= form_for([commontator, thread, comment],
-             remote: !no_remote) do |f| %>
+<%= form_for([commontator, thread, comment], html: { multipart: true}) do |f| %>
 
   <%= hidden_field_tag :per_page, per_page %>
   
   <div class="comment_form_field">
-    <%= f.text_area :body, rows: '7', class: 'form-control' %>
+    <%= f.text_area :body, rows: '5', class: 'form-control' %>
     <%= javascript_tag('Commontator.initMentions()') if Commontator.mentions_enabled %>
+    <%= file_field_tag "commontable[documents_attributes][][attachment]", class: 'form-control', style: 'height:38px'%>
   </div>
   
   <div class="comment_form_actions panel-footer">
