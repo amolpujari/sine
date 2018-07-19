@@ -4,11 +4,11 @@
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <h4><%= pluralize(@marketing_request.errors.count, "error") %> prohibited this request from being saved:</h4>
 
-      <ul>
+      <ol>
       <% @marketing_request.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
-      </ul>
+      </ol>
     </div>
   <% end %>
 
@@ -21,12 +21,12 @@
   <div class="form-group">
     <%= f.label :description, class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
-      <%= f.text_area :description, class: "form-control" %>
+      <%= f.text_area :description, class: "form-control", 'data-provider': :summernote %>
     </div>
   </div>
   <% if @marketing_request.new_record? %>
   <div class="form-group">
-    <%= f.label :description, class: "col-sm-2 control-label" %>
+    <%= f.label :file, class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
       <%= file_field_tag "marketing_request[documents_attributes][][attachment]", class: 'form-control'%>
     </div>

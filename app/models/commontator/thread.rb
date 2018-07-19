@@ -33,6 +33,7 @@ module Commontator
 
     def ordered_comments(unfiltered = false)
       vc = unfiltered ? comments : filtered_comments
+      vc = vc.includes(:documents)
       case config.comment_order.to_sym
       when :l then vc.order('created_at DESC')
       when :e then vc.order('created_at ASC')

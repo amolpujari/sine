@@ -16,12 +16,17 @@
       Edit
     <% end %>
 
+    <a data-toggle="modal" href="#watchers" class="btn btn-default">
+      <span class="glyphicon glyphicon-bullhorn"></span>
+      <%= @marketing_request.watchers_emails.count %>
+    </a>
+
     <% unless current_user.user? %>
       <%= link_to accept_marketing_request_path, 'data-method' => :put, class: 'btn btn-success' do %>
         <span class="glyphicon glyphicon-ok"></span>
         Accept
       <% end %>
-      <%= link_to reject_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' do %>
+      <%= link_to reject_marketing_request_path, 'data-method' => :put, class: 'btn btn-danger' do %>
         <span class="glyphicon glyphicon-remove"></span>
         Reject
       <% end %>
@@ -29,21 +34,41 @@
 
   <% end %>
 
-  <h4><%= @marketing_request.title %></h4>
+  <h4><span class="gray">#<%= @marketing_request.id %>:</span> <%= @marketing_request.title %></h4>
 </div>
 
 <dl class="dl-horizontal">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-9" style="border-right: 1px solid #eeeeee;">
-        <p><span class="label label-<%=@marketing_request.workflow_state %>"><%= @marketing_request.workflow_state.humanize.upcase %></span>
+      <div class="col-md-9 show-right-border">
+        <p>
+          <div class="dropdown">
+            <span class="label label-<%=@marketing_request.workflow_state %>">
+              <%= @marketing_request.workflow_state.humanize.upcase %>
+            </span>
+
+            <span class="dropdown-toggle" id="priorityFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <strong class="priority" id="priority"><%= @marketing_request.priority %></strong>
+            </span>
+            <ul class="dropdown-menu priority-filter" aria-labelledby="priorityFilter" data-id="<%= @marketing_request.id %>">
+              <li><a href="#" data-turbolinks="false">P0</a></li>
+              <li><a href="#" data-turbolinks="false">P1</a></li>
+              <li><a href="#" data-turbolinks="false">P2</a></li>
+              <li><a href="#" data-turbolinks="false">P3</a></li>
+              <li><a href="#" data-turbolinks="false">P4</a></li>
+            </ul>
+          </div>
         </p>
 
-        <p><%= @marketing_request.description.html_safe %></p>
+        <div class="desc"><%= @marketing_request.description.html_safe %></div>
         
-        <p style="color:#777;">
-          By <%= @marketing_request.submitted_by %> on <%= local_time_ago @marketing_request.created_at %>
-          <br/>Last updated <%= local_time_ago @marketing_request.updated_at %>
+        <p class="gray">
+          <%= local_time_ago @marketing_request.created_at %> by <%= @marketing_request.submitted_by %>
+          <br/>Last update <%= local_time_ago @marketing_request.updated_at %>
+          
+          <% if @marketing_request.watchers.present? %>
+            <br/>Watchers: <%= @marketing_request.watchers %>
+          <% end %>
         </p>        
 
         <%= commontator_thread(@marketing_request) %>
@@ -58,14 +83,13 @@
 
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 <div class="page-header">
-  <% if @marketing_request.complete? %>
-    <%= link_to 'Reopen', reopen_marketing_request_path, 'data-method' => :put, class: 'btn btn-default' %>
-  <% end %>
-
   <%= link_to @marketing_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  do %>
     <span class="glyphicon glyphicon-trash"></span>
     Delete Request
-  <% end %>
+  <% end if current_user.admin? %>
   <h4>&nbsp;</h4>
 </div>
+
+<%= render partial: 'watchers' %>

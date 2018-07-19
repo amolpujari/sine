@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "document_download/:uuid" => "assets#document_download", as: :document
+
   namespace :admin do
     resources :users
     root to: "users#index"

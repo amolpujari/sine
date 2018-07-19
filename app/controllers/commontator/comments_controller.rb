@@ -28,14 +28,11 @@ module Commontator
       security_transgression_unless @comment.can_be_created_by?(@user)
       subscribe_mentioned if Commontator.mentions_enabled
 
-      if params[:commontable]
-        params[:commontable].permit!
-        if @comment.thread.commontable.update params[:commontable].permit!
-          @comment.body << %{
-<br/>
-<i style="color:#eee;">File attached: #{@comment.thread.commontable.documents.reorder('created_at desc').first.email_link}</i>
-          }
-        end
+      if params[:comment][:documents_attributes].present?
+        params[:comment].permit!
+        h = params[:comment].to_h
+        h[:documents_attributes][0][:uploaded_by_id] = current_user.id
+        @comment.documents_attributes = h[:documents_attributes]
       end
 
       respond_to do |format|

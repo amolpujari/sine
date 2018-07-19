@@ -20,6 +20,10 @@
   </div>
   <div id="comment_<%= comment.id.to_s %>_bottom_div" class="comment_div panel-footer">
     <span id="comment_<%= comment.id.to_s %>_commontator_span" class="comment_commontator">
+      <% if comment.document %>
+      attached
+      <a href="<%= document_path(comment.document.uuid) %>" target='_blank'><%= comment.document.public_name %></a>
+      <% end %>
       by <%= link.blank? ? name : link_to(name, link) %>
     </span>
     <span id="comment_<%= comment.id.to_s %>_actions_span" class="comment_actions">

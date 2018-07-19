@@ -69,7 +69,7 @@ Rails.application.configure do
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
-
+  config.paperclip_defaults = {:storage => :s3, :s3_credentials => "#{Rails.root}/config/s3.yml", :s3_protocol => :https}
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
   config.action_mailer.smtp_settings = {
@@ -103,4 +103,10 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack, :email => {
+    :email_prefix => "[#{Rails.env.to_s.upcase} Error] ",
+    :sender_address => %{"exception.notifier@offspring.platformv.com" <exception.notifier@offspring.platformv.com>},
+    :exception_recipients => %w{amolpujari@gmail.com roger.smith@platformv.com}
+  }
 end

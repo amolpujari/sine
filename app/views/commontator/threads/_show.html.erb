@@ -23,6 +23,9 @@
       </span>
     <% end %>
 
+    <h4>Discussion</h4>
+    <small>latest comment first</small>
+
     &nbsp;
 
     <% if can_edit %>
@@ -53,6 +56,7 @@
   <% if thread.config.comment_order == :l %>
     <%= render partial: 'commontator/threads/reply',
                locals: { thread: thread, user: user, per_page: per_page } %>
+    <br/>
   <% end %>
 
   <div id="thread_<%= thread.id.to_s %>_comment_list_div" class="thread_comment_list">

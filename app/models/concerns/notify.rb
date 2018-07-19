@@ -7,11 +7,16 @@ module Concerns::Notify
 
   def notify_after_create options={}
     options[:subject] = "New #{self.class.name.demodulize.tableize.singularize.humanize}"
-    ApplicationMailer.delay.notify(self, options)
+    ApplicationMailer.notify(self, options).deliver
   end
 
   def notify options={}
-    ApplicationMailer.delay.notify(self, options)
+    ApplicationMailer.notify(self, options).deliver
+  end
+
+  def notify_admin options={}
+    options[:to] = User.admin.pluck(:email)
+    ApplicationMailer.notify(self, options).deliver
   end
 
   def to_email

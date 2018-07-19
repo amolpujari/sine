@@ -1,6 +1,23 @@
 module Commontator
   class Comment < ActiveRecord::Base
+    has_many :documents, :as => :assetable, :class_name => "Asset::Document", :dependent => :destroy
+    accepts_nested_attributes_for :documents, :allow_destroy => true
+    validates_associated :documents, :on => :create
+
+    def document
+      @document ||= self.documents[0]
+    end
+
     after_create :mark_request_in_review
+
+    def mark_request_in_review
+      o = self.thread.commontable
+
+      unless o.complete?
+        o.workflow_state = :in_review
+        o.save
+      end
+    end
 
     include Concerns::Notify
 
@@ -22,15 +39,6 @@ module Commontator
       self.thread.commontable.email_link
     end
 
-    def mark_request_in_review
-      o = self.thread.commontable
-
-      unless o.complete?
-        o.workflow_state = :in_review
-        o.save
-      end
-    end
-
     belongs_to :creator, polymorphic: true
     belongs_to :editor, polymorphic: true, optional: true
     belongs_to :thread
@@ -39,10 +47,6 @@ module Commontator
     validates_presence_of :editor, on: :update
     validates_presence_of :thread
     validates_presence_of :body
-
-    validates_uniqueness_of :body,
-      scope: [:creator_type, :creator_id, :thread_id, :deleted_at],
-      message: I18n.t('commontator.comment.errors.double_posted')
 
     protected
 

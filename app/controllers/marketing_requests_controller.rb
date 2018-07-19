@@ -1,18 +1,18 @@
 class MarketingRequestsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_marketing_request, only: [:show, :edit, :update, :destroy, :accept, :reject, :reopen]
+  before_action :set_marketing_request, only: [:edit, :update, :destroy, :accept, :reject, :reopen]
 
   def index
-    MarketingRequest.mark_stale
-
-    @marketing_requests = if current_user.user?
-      MarketingRequest.where(submitted_by_id: current_user.id)
-    else
-      MarketingRequest.all      
-    end    
+    respond_to do |format|
+      format.html { MarketingRequest.mark_stale }
+      format.json { render json: MarketingRequestDatatable.new(view_context) }
+    end
   end
 
   def show
+    @marketing_request = MarketingRequest.where(id: params[:id]).
+    eager_load(thread: [comments: [:documents]]).
+    includes(:submitted_by).includes(:documents).all[0]
   end
 
   def new
@@ -43,9 +43,14 @@ class MarketingRequestsController < ApplicationController
   def create
     @marketing_request = MarketingRequest.new(marketing_request_params)
     @marketing_request.submitted_by = current_user
+    @marketing_request.valid?
+
+    unless marketing_request_params[:documents_attributes]
+      @marketing_request.errors.add(:base, "File can't be blank")
+    end
 
     respond_to do |format|
-      if @marketing_request.save
+      if @marketing_request.errors.empty? &&  @marketing_request.save
         format.html { redirect_to @marketing_request, notice: 'Marketing request was successfully created.' }
         format.json { render :show, status: :created, location: @marketing_request }
       else
@@ -76,11 +81,18 @@ class MarketingRequestsController < ApplicationController
   end
 
   private
-    def set_marketing_request
-      @marketing_request = MarketingRequest.find(params[:id])
-    end
 
-    def marketing_request_params
-      params.require(:marketing_request).permit(:title, :description, documents_attributes: [:attachment, :_destroy, :id])
+  def set_marketing_request
+    @marketing_request = MarketingRequest.find(params[:id])
+  end
+
+  def marketing_request_params
+    mrp = params.require(:marketing_request).permit(:title, :description, :priority, :watchers, documents_attributes: [:attachment, :_destroy, :id])
+
+    h = mrp.to_h
+    if h[:documents_attributes].present?
+      h[:documents_attributes][0][:uploaded_by_id] = current_user.id
     end
+    h
+  end
 end

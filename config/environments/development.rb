@@ -14,6 +14,8 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp/caching-dev.txt').exist?
+    config.cache_classes = true
+    config.eager_load = true
     config.action_controller.perform_caching = true
 
     config.cache_store = :memory_store
@@ -53,6 +55,8 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = false
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true

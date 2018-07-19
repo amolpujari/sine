@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407045244) do
+ActiveRecord::Schema.define(version: 20180528000000) do
 
   create_table "assets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "assetable_id"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 20180407045244) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uuid"
+    t.integer "uploaded_by_id"
     t.index ["assetable_type", "assetable_id"], name: "index_assets_on_assetable_type_and_assetable_id"
   end
 
@@ -71,6 +73,8 @@ ActiveRecord::Schema.define(version: 20180407045244) do
     t.string "workflow_state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "watchers"
+    t.integer "priority", default: 2
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -1,0 +1,13 @@
+development:
+  bucket: <%= Rails.application.secrets[:aws][:s3_bucket] %>
+  access_key_id: <%= Rails.application.secrets[:aws][:amazon_access_key] %>
+  secret_access_key: <%= Rails.application.secrets[:aws][:amazon_secret_key] %>
+stage:
+  bucket: <%= Rails.application.secrets[:aws][:s3_bucket] %>
+  access_key_id: <%= Rails.application.secrets[:aws][:amazon_access_key] %>
+  secret_access_key: <%= Rails.application.secrets[:aws][:amazon_secret_key] %>
+production:
+  bucket: <%= Rails.application.secrets[:aws][:s3_bucket] %>
+  access_key_id: <%= Rails.application.secrets[:aws][:amazon_access_key] %>
+  secret_access_key: <%= Rails.application.secrets[:aws][:amazon_secret_key] %>
+  s3_region: <%= Rails.application.secrets[:aws][:s3_region] %>

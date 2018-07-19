@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin_only, :except => :show
+  before_action :admin_only
 
   def index
     @users = User.all
@@ -24,18 +24,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    user = User.find(params[:id])
-    user.destroy
-    redirect_to users_path, :notice => "User deleted."
-  end
-
   private
 
   def admin_only
-    unless current_user.admin?
-      redirect_to root_path, :alert => "Access denied."
-    end
+    redirect_to root_path unless current_user.admin?
   end
 
   def secure_params
